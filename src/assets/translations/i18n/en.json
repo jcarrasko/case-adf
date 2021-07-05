@@ -1,0 +1,29 @@
+  {
+  "APP_TITLE": "Claims Center",
+  "LOGIN_BUTTON": "Login",
+  "LOGOUT_BUTTON": "Logout",
+  "LAYOUT":{
+  "MENU_MY_TASKS":"Your Work Items",
+  "MENU_NEW_CONTRACT":"New Claim",
+  "MENU_CONTRACTS":"Claims Library",
+  "MENU_SEARCH":"Search Claims",
+  "MENU_ANALYSE":"Analyse",
+  "DOCUMENTS":"Documents"
+  },
+  "MY_TASKS":{
+    "TITLE":"My Tasks"
+  },
+  "NEW_CONTRACT_FORM":{
+    "COMPANY":"Company",
+    "SIGNATURE":"Signature",
+    "COMPANY_NAME":"Company Name",
+    "ENTITY_TYPE":"Entity Type",
+    "ENTITY_TYPE_LTD":"Private Limited LTD",
+    "ENTITY_TYPE_PLC":"Public Limited PLC",
+    "ENTITY_TYPE_CORP":"Corporation, Incorporated",
+    "ENTITY_TYPE_FREE":"Freelance",
+    "SHARE_CAPITAL":"Share Capital",
+    "COMPANY_ADDRESS":"Company Address",
+    "COMPANY_CITY":"City of Registration"
+  }
+}

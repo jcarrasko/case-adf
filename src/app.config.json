@@ -1,0 +1,183 @@
+{
+    "$schema": "../node_modules/@alfresco/adf-core/app.config.schema.json",
+    "ecmHost": "http://{hostname}{:port}",
+    "bpmHost": "http://{hostname}{:port}",
+    "alfrescoRepositoryName": "alfresco-1-alfresco-1",
+    "providers" : "ALL",
+    "application": {
+        "name": "Claims Center",
+        "analyticsDefaultReportId": "33",
+        "analyticsDefaultAppId": "1001",
+        "processAppId": "1001",
+        "processName": "Withdrawal Claims Process",
+        "dlDefaultNodeId": "2ef68188-51a0-4dd3-843b-2a64d960b11f",
+        "caseLibraryRootNodeId": "51660a36-0953-4d59-8dec-72a04873068c",
+        "ApsDefaultNodeId": "0ab21027-1590-4d4e-989b-a8456ea90112"
+    },
+    "languages": [
+        {
+            "key": "en",
+            "label": "English"
+        },
+        {
+            "key": "fr",
+            "label": "French"
+        },
+        {
+            "key": "de",
+            "label": "German"
+        },
+        {
+            "key": "it",
+            "label": "Italian"
+        },
+        {
+            "key": "es",
+            "label": "Spanish"
+        },
+        {
+            "key": "ja",
+            "label": "Japanese"
+        },
+        {
+            "key": "nl",
+            "label": "Dutch"
+        },
+        {
+            "key": "pt-BR",
+            "label": "Brazilian Portuguese"
+        },
+        {
+            "key": "nb",
+            "label": "Norwegian"
+        },
+        {
+            "key": "ru",
+            "label": "Russian"
+        },
+        {
+            "key": "zh-CN",
+            "label": "Simplified Chinese"
+        }
+    ],
+    "logLevel" : "trace",
+    "content-metadata": {
+      "presets": {
+
+          "case": [{
+              "title": "Member details",
+              "items": [
+                  { "aspect": "case:member", "properties": "*" }
+              ]
+          }]
+            },
+
+        "default": {
+          "includeAll": true
+      }
+
+        }
+    ,
+    "search": {
+      "sorting": {
+          "options": [
+              { "key": "name", "label": "Name", "type": "FIELD", "field": "cm:name", "ascending": true },
+              { "key": "content.sizeInBytes", "label": "Size", "type": "FIELD", "field": "content.size", "ascending": true },
+              { "key": "description", "label": "Description", "type": "FIELD", "field": "cm:description", "ascending": true }
+          ],
+          "defaults": [
+              { "key": "name", "type": "FIELD", "field": "cm:name", "ascending": true }
+          ]
+      },
+      "filterQueries": [
+          { "query": "TYPE:'proc:purchasing_contract' OR TYPE:'proc:purchasing_contract_folder'" },
+          { "query": "NOT cm:creator:System" }
+      ],
+      "facetFields": {
+        "expanded": false,
+        "fields": [
+          { "field": "content.mimetype", "mincount": 1, "label": "Type" },
+          { "field": "creator", "mincount": 1, "label": "Creator" }
+
+        ]
+      },
+
+      "facetIntervals":{
+        "expanded": false,
+        "intervals":[
+          {
+            "label":"Created",
+            "field":"cm:created",
+            "sets":[
+              { "label":"Last Year", "start":"2018", "end":"2019", "endInclusive":false },
+              { "label":"Current year", "start":"NOW/YEAR", "end":"NOW/YEAR+1YEAR" },
+              { "label":"Any date", "start":"*", "end":"2021", "endInclusive":false }
+            ]
+          }
+        ]
+      },
+      "categories": [
+
+          {
+            "id": "checkList",
+            "name": "Search type",
+            "enabled": true,
+            "component": {
+                "selector": "radio",
+                "pageSize": 5,
+                "allowUpdateOnChange": true,
+                "settings": {
+                    "operator": "OR",
+                    "options": [
+                        { "name": "Case Documents", "value": "ASPECT:'case:document'" },
+                        { "name": "Cases", "value": "ASPECT:'case:case'" }
+
+                    ]
+                 }
+                }
+            },
+              {
+                "id": "queryName",
+                "name": "Member Id",
+                "enabled": true,
+                "expanded": false,
+                "component": {
+                    "selector": "text",
+                    "settings": {
+                        "pattern": "case:MemberId:'(.*?)'",
+                        "field": "case:MemberId",
+                        "placeholder": "Member ID..."
+                    }
+                }
+            },
+            {
+              "id": "queryName",
+              "name": "Case Id",
+              "enabled": true,
+              "expanded": false,
+              "component": {
+                  "selector": "text",
+                  "settings": {
+                      "pattern": "case:id:'(.*?)'",
+                      "field": "case:id",
+                      "placeholder": "Case id..."
+                  }
+              }
+          }
+      ]
+  },
+  "alfresco-enterprise-viewer": {
+    "$version": "1.0.0",
+    "properties": {
+        "endpoints": {
+            "aev": "/OpenAnnotate",
+            "aevVideo": "/OpenAnnotateVideo"
+        },
+        "alfrescoDocumentStorePrefix": "workspace://SpacesStore/",
+        "supportedMimetypes": {
+            "documents": [ "*" ],
+            "videos": [ "video/mp4", "audio/aac", "audio/mpeg" ]
+        }
+    }
+}
+}

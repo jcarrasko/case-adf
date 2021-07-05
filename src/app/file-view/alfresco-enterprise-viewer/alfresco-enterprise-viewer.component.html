@@ -1,0 +1,31 @@
+  <ng-container *ngIf="showViewer">
+<!--
+    <adf-toolbar
+      color="default"
+      id="adf-viewer-toolbar"
+      class="adf-viewer-toolbar"
+    >
+      <adf-toolbar-title style="width : auto !important;">
+        <button
+          class="adf-viewer-close-button"
+          data-automation-id="adf-toolbar-back"
+          mat-icon-button
+          title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}"
+          (click)="onBackButtonClick()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </adf-toolbar-title>
+
+      <div
+        fxFlex="1 1 auto"
+        class="adf-viewer__file-title"
+        style="flex: 1 1 auto;box-sizing: border-box;"
+      >
+      <span class="adf-viewer__display-name" id="adf-viewer-display-name">{{ node.name }}</span>
+      </div> 
+    </adf-toolbar>
+  -->
+    <iframe class="alfresco-enterprise-viewer" [src]="sanitizedAevUrl"  ></iframe>
+
+  </ng-container>

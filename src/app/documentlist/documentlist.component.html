@@ -1,0 +1,128 @@
+
+<div *ngIf="showDL" >
+<adf-toolbar>
+  <adf-toolbar-title>
+    <adf-breadcrumb
+      class="files-breadcrumb"
+      root="Customer files"
+      [rootId]="defaultNodeId"
+      [target]="documentList"
+      [folderNode]="documentList.folderNode">
+    </adf-breadcrumb>
+  </adf-toolbar-title>
+
+  <div class="adf-toolbar--spacer"></div>
+
+  <adf-upload-button *ngIf="isSuperRootFolder()"
+    [rootFolderId]="documentList.currentFolderId || '-root-'"
+    [adf-check-allowable-operation]="'create'"
+    (success)="uploadSuccess($event)">
+  </adf-upload-button>
+
+</adf-toolbar>
+
+<adf-document-list
+  #documentList
+  [currentFolderId]="defaultNodeId"
+  [contextMenuActions]="true"
+  [contentActions]="true"
+
+  (preview)="showPreview($event)">
+
+
+  <data-columns>
+    <data-column key="$thumbnail" type="image"></data-column>
+    <data-column key="name" title="Name" class="full-width name-column"></data-column>
+
+    <!--
+    <data-column  *ngIf="isSuperRootFolder()" title="Nom de la société" key="properties" [sortable]="false">
+        <ng-template let-value="value" let-context="$implicit">
+            <div *ngIf="value"> {{value['rte:company']}} </div>
+     </ng-template>
+    </data-column> -->
+
+     <data-column *ngIf="isSuperRootFolder()" title="Type" key="properties" [sortable]="false">
+        <ng-template let-value="value" let-context="$implicit">
+            <div *ngIf="value"> {{value['proc:provider_type']}} </div>
+     </ng-template>
+    </data-column>
+
+    <data-column  *ngIf="isSuperRootFolder()" title="Object" key="properties" [sortable]="false">
+        <ng-template let-value="value" let-context="$implicit">
+            <div *ngIf="value"> {{value['proc:object']}} </div>
+     </ng-template>
+    </data-column>
+    <data-column *ngIf="isSuperRootFolder()" title="Price" key="properties" [sortable]="false">
+        <ng-template let-value="value" let-context="$implicit">
+            <div *ngIf="value"> {{value['proc:price']}} </div>
+     </ng-template>
+    </data-column>
+
+    <data-column
+    title="Created at"
+    key="createdAt"
+    type="date"
+    format="medium"
+    sortable="true"
+     >
+
+
+
+</data-column>
+
+<data-column *ngIf="isSuperRootFolder()" key="id"
+              title=""
+              class="adf-desktop-only adf-ellipsis-cell">
+              <ng-template let-entry="$implicit">
+                  <button mat-icon-button [adf-node-lock]="entry.row.node.entry" class="adf-lock-button">
+                      <mat-icon>lock</mat-icon>
+
+                  </button>
+              </ng-template>
+            </data-column>
+
+  </data-columns>
+
+<content-actions>
+
+    <content-actions>
+        <content-action
+            target="document"
+            title="Download"
+            handler="download">
+        </content-action>
+        <content-action
+            target="folder"
+            title="Download as a ZIP"
+            handler="download">
+        </content-action>
+    </content-actions>
+    <content-action
+      target="document"
+      title="Copy"
+      permission="update"
+      [disableWithNoPermission]="true"
+      handler="copy">
+  </content-action>
+  <content-action
+  target="document"
+  title="Review and Approve"
+  (execute)="launchWorkflow($event)">
+</content-action>
+</content-actions>
+</adf-document-list>
+<adf-file-uploading-dialog></adf-file-uploading-dialog>
+
+</div>
+
+<!-- for launching action-->
+<div *ngIf="showProcess">
+<adf-start-process
+    [values]="formValues"
+    [appId]="processId"
+    [name]="processName"
+    [processDefinitionName]="'Review and Approve - Single person'"
+    (start)="startingWorkflow($event)"
+    (cancel)="cancelingWorkflow($event)">
+</adf-start-process>
+</div>

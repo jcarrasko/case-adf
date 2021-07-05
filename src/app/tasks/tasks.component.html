@@ -1,0 +1,54 @@
+<h3>Your Work Items</h3>
+
+<adf-tasklist  [appId]="appId" state="open" assignment="assignee" (rowClick)="onRowClick($event)">
+ 
+  <data-columns >
+
+   
+    <data-column key="name" title="Name" class="full-width name-column"></data-column>
+       
+    
+
+
+
+    <data-column key="assignee" title="Assignee" class="full-width name-column">
+      <ng-template let-entry="$implicit">
+        <div>{{entry.row.obj.assignee | fullName}}</div>
+      </ng-template>
+    </data-column>
+    <data-column key="created" title="Created" format="timeAgo" type="date" class="hidden"></data-column>
+<!--  
+    <data-column  key="contract" title="Contract Number" class="full-width name-column">
+      <ng-template let-entry="$implicit">
+        <div> {{ getContractNumber(entry.row.obj.processInstanceId)}} </div>
+      </ng-template>
+    </data-column>
+
+   <data-column key="company" title="Supplier" class="full-width name-column">
+      <ng-template let-entry="$implicit">
+        <div> {{ getCompany(entry.row.obj.processInstanceId) }} </div>
+      </ng-template>
+    </data-column>
+    <data-column key="object" title="Object" class="full-width name-column">
+      <ng-template let-entry="$implicit">
+        <div> {{ getObject(entry.row.obj.processInstanceId) }} </div>
+      </ng-template>
+    </data-column>
+    <data-column key="price" title="Price" class="full-width name-column">
+      <ng-template let-entry="$implicit">
+        <div> {{ getPrice(entry.row.obj.processInstanceId) }} </div>
+      </ng-template>
+    </data-column>  
+    
+
+    <data-column key="assignee" title="Assignee" class="full-width name-column">
+      <ng-template let-entry="$implicit">
+        <div>{{entry.row.obj.assignee | fullName}}</div>
+      </ng-template>
+    </data-column>
+    <data-column key="created" title="Created" format="timeAgo" type="date" class="hidden" ></data-column>
+    
+  -->
+  </data-columns>
+ 
+</adf-tasklist>

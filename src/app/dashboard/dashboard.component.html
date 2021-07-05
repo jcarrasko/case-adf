@@ -1,0 +1,46 @@
+<script src="node_modules/chart.js/dist/Chart.bundle.js"></script>
+<h2>Dashboard</h2>
+ <h3>Please, choose the Fiscal Quarter:</h3>
+<mat-form-field>
+  <mat-select placeholder="choose ..."  (selectionChange)="fill()" [(value)]="selectedQuarter">
+ 
+    <mat-option *ngFor="let quarter of quarters" [value]="quarter.value">
+      {{quarter.viewValue}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+ 
+<mat-grid-list cols="2" mat-grid-tile-header="fit">
+
+
+<mat-grid-tile>
+    <mat-grid-tile-header>Claim type</mat-grid-tile-header>
+      <canvas baseChart
+              [datasets]="sectionChartData"
+              [labels]="barChartLabelsType"
+              [options]="barChartOptions"
+              [legend]="barChartLegend"
+              [colors]="sectionChartColors"
+              [chartType]="barChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+        <mat-grid-tile-header>Open vs Ended Claims</mat-grid-tile-header>
+      <canvas baseChart
+              [datasets]="detailChartData"
+              [labels]="barChartLabels"
+              [colors]="detailChartColors"
+              [options]="barChartOptions"
+              [legend]="barChartLegend"
+              [chartType]="barChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+    </mat-grid-tile>
+
+    
+
+</mat-grid-list>
+
+

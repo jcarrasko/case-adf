@@ -1,0 +1,202 @@
+<div *ngIf="isCaseFolder" style="height:150px">
+  <adf-start-process [appId]="'2'" [processDefinitionName]="'new-claim'" [showSelectProcessDropdown]=false
+    [showSelectApplicationDropdown]=false (start)="onProcessStarted($event)" (cancel)="onCancelStartProcess()">
+  </adf-start-process>
+</div>
+
+
+
+<adf-info-drawer>
+  <adf-info-drawer-tab label="Documents">
+    <div *ngIf="showDL">
+      <adf-toolbar>
+        <adf-toolbar-title>
+          <adf-breadcrumb class="files-breadcrumb" root="Claims" [rootId]="defaultNodeId" [target]="documentList"
+            [folderNode]="documentList.folderNode">
+          </adf-breadcrumb>
+        </adf-toolbar-title>
+        <div class="adf-toolbar--spacer"></div>
+        <button *ngIf="isCaseFolder" mat-button=""
+          class="mat-focus-indicator mat-button mat-button-base ng-star-inserted"><span class="mat-button-wrapper"
+            (click)="launchNewTaskWorkflow($event)">
+            <mat-icon role="img" class="mat-icon notranslate material-icons mat-icon-no-color" aria-hidden="true"
+              data-mat-icon-type="font">add_task</mat-icon><span id="upload-single-file-label"
+              class="ng-star-inserted">New task</span>
+          </span>
+        </button>
+        <div class="adf-app-layout-menu-spacer"></div>
+        <div class="adf-app-layout-menu-spacer"></div>
+        <div class="adf-app-layout-menu-spacer"></div>
+
+
+        <button *ngIf="isCaseFolder" mat-button=""
+          class="mat-focus-indicator mat-button mat-button-base ng-star-inserted"><span class="mat-button-wrapper"
+            (click)="launchRequestMoreFilesWorkflow($event)">
+            <mat-icon role="img" class="mat-icon notranslate material-icons mat-icon-no-color" aria-hidden="true"
+              data-mat-icon-type="font">assignment_ind</mat-icon><span id="upload-single-file-label"
+              class="ng-star-inserted">Request more files</span>
+          </span>
+        </button>
+        <div class="adf-app-layout-menu-spacer"></div>
+        <div class="adf-app-layout-menu-spacer"></div>
+        <div class="adf-app-layout-menu-spacer"></div>
+
+        <button *ngIf="isCaseFolder" mat-button=""
+          class="mat-focus-indicator mat-button mat-button-base ng-star-inserted"><span class="mat-button-wrapper"
+            (click)="launchIndexNewFileFlow($event)">
+            <mat-icon role="img" class="mat-icon notranslate material-icons mat-icon-no-color" aria-hidden="true"
+              data-mat-icon-type="font">file_upload</mat-icon><span id="upload-single-file-label"
+              class="ng-star-inserted">Index new file</span>
+          </span>
+        </button>
+        <div class="adf-app-layout-menu-spacer"></div>
+        <div class="adf-app-layout-menu-spacer"></div>
+        <div class="adf-app-layout-menu-spacer"></div>
+
+
+        <!--adf-upload-button *ngIf="isSuperRootFolder()" [rootFolderId]="documentList.currentFolderId || '-root-'"
+              [adf-check-allowable-operation]="'create'" (success)="uploadSuccess($event)">
+            </adf-upload-button-->
+
+
+
+      </adf-toolbar>
+
+
+
+      <adf-document-list #documentList [currentFolderId]="defaultNodeId" [contextMenuActions]="true"
+        [contentActions]="true" (ready)="refreshFolder($event)" (preview)="showPreview($event)">
+
+
+        <data-columns>
+          <data-column key="$thumbnail" type="image"></data-column>
+          <data-column key="name" title="Name" class="full-width name-column"></data-column>
+
+          <data-column *ngIf="isSuperRootFolder()" title="Document Type" key="properties" [sortable]="false">
+            <ng-template let-value="value" let-context="$implicit">
+              <div *ngIf="value"> {{value['case:doctype']}} </div>
+            </ng-template>
+          </data-column>
+
+          <data-column *ngIf="isSuperRootFolder()" title="Case Id" key="properties" [sortable]="false">
+            <ng-template let-value="value" let-context="$implicit">
+              <div *ngIf="value"> {{value['case:id']}} </div>
+            </ng-template>
+          </data-column>
+          <data-column *ngIf="isSuperRootFolder()" title="Case Type" key="properties" [sortable]="false">
+            <ng-template let-value="value" let-context="$implicit">
+              <div *ngIf="value"> {{value['case:type']}} </div>
+            </ng-template>
+          </data-column>
+
+
+          <data-column title="Created at" key="createdAt" type="date" format="medium" sortable="true">
+
+          </data-column>
+
+          <data-column *ngIf="isSuperRootFolder()" key="id" title="" class="adf-desktop-only adf-ellipsis-cell">
+            <ng-template let-entry="$implicit">
+              <button mat-icon-button [adf-node-lock]="entry.row.node.entry" class="adf-lock-button">
+                <mat-icon>lock</mat-icon>
+
+              </button>
+            </ng-template>
+          </data-column>
+
+        </data-columns>
+
+        <content-actions>
+
+          <content-actions>
+            <content-action target="document" title="Download" handler="download">
+            </content-action>
+            <content-action target="folder" title="Download as a ZIP" handler="download">
+            </content-action>
+          </content-actions>
+          <content-action target="document" title="Copy" permission="update" [disableWithNoPermission]="true"
+            handler="copy">
+          </content-action>
+          <content-action target="document" title="Review and Approve" (execute)="launchWorkflow($event)">
+          </content-action>
+        </content-actions>
+      </adf-document-list>
+
+      <adf-file-uploading-dialog></adf-file-uploading-dialog>
+    </div>
+
+
+    <!-- for launching action-->
+    <div *ngIf="showProcess">
+      <adf-start-process [values]="formValues" [appId]="processId" [name]="processName"
+        [processDefinitionName]="'Review and Approve - Single person'" (start)="startingWorkflow($event)"
+        (cancel)="cancelingWorkflow($event)">
+      </adf-start-process>
+    </div>
+    <div *ngIf="showRequestMoreFiles">
+      <adf-start-process [values]="formValues" [appId]="'2'" [name]="processName"
+        [processDefinitionName]="'request-docs'" (start)="startingWorkflow($event)"
+        (cancel)="cancelingWorkflow($event)">
+      </adf-start-process>
+    </div>
+    <div *ngIf="showIndexNewFiles">
+      <adf-start-process [values]="formValues" [appId]="'2'" [name]="processName"
+        [processDefinitionName]="'file-upload'" (start)="startingWorkflow($event)" (cancel)="cancelingWorkflow($event)">
+      </adf-start-process>
+    </div>
+
+    <!-- for launching adhoc task-->
+    <div *ngIf="showNewTask" style="width:100%">
+      <adf-start-task [appId]="2">
+      </adf-start-task>
+    </div>
+
+
+  </adf-info-drawer-tab>
+  <adf-info-drawer-tab label="Work Items" *ngIf="isCaseFolder">
+    <div>
+      <adf-tasklist [appId]="2" state="open" assignment="assignee" (rowClick)="onRowClick($event)">
+        <data-columns>
+          <!--<data-column key="contract" title="Contract Number" class="full-width name-column">
+              <ng-template let-entry="$implicit">
+                <div> {{ getContractNumber(entry.row.obj.processInstanceId)}} </div>
+              </ng-template>
+            </data-column> -->
+
+          <data-column key="name" title="Task" class="full-width name-column"></data-column>
+
+          <data-column key="memberId" title="Member ID" class="full-width name-column">
+            <ng-template let-entry="$implicit">
+              <div> {{memberId}} </div>
+            </ng-template>
+          </data-column>
+
+          <data-column key="caseId" title="Case ID" class="full-width name-column">
+            <ng-template let-entry="$implicit">
+              <div> {{caseId}} </div>
+            </ng-template>
+          </data-column>
+
+
+
+          <data-column key="assignee" title="Assignee" class="full-width name-column">
+            <ng-template let-entry="$implicit">
+              <div>{{entry.row.obj.assignee | fullName}}</div>
+            </ng-template>
+          </data-column>
+          <data-column key="created" title="Created" format="timeAgo" type="date" class="hidden"></data-column>
+
+
+        </data-columns>
+
+      </adf-tasklist>
+
+
+
+
+
+
+
+    </div>
+  </adf-info-drawer-tab>
+
+</adf-info-drawer>

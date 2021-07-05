@@ -1,0 +1,255 @@
+@import '~@alfresco/adf-content-services/theming';
+@import '~@alfresco/adf-process-services/theming';
+@import '~@alfresco/adf-core/theming';
+
+@import '~@angular/material/theming';
+
+@include mat-core($alfresco-typography);
+
+$head2: (
+  50 : #ffffff,
+  100 : #ffffff,
+  200 : #ffffff,
+  300 : #ffffff,
+  400 : #ffffff,
+  500 : #ffffff,
+  600 : #ffffff,
+  700 : #ffffff,
+  800 : #ffffff,
+  900 : #ffffff,
+  A100 : #ffffff,
+  A200 : #ffffff,
+  A400 : #ffffff,
+  A700 : #ffffff,
+  contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #000000,
+      400 : #000000,
+      500 : #000000,
+      600 : #000000,
+      700 : #000000,
+      800 : #000000,
+      900 : #000000,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #000000,
+      A700 : #000000,
+  )
+);
+
+$accent:   (
+  50 : #e1e3ea,
+  100 : #b3b9ca,
+  200 : #808ba7,
+  300 : #4d5c83,
+  400 : #273969,
+  500 : #01164e,
+  600 : #011347,
+  700 : #01103d,
+  800 : #010c35,
+  900 : #000625,
+  A100 : #0c94ff,
+  A200 : #0073ce,
+  A400 : #0065b4,
+  A700 : #005da5,
+  contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #ffffff,
+      400 : #ffffff,
+      500 : #ffffff,
+      600 : #ffffff,
+      700 : #ffffff,
+      800 : #ffffff,
+      900 : #ffffff,
+      A100 : #ffffff,
+      A200 : #ffffff,
+      A400 : #ffffff,
+      A700 : #ffffff,
+  )
+);
+
+$main: (
+    50 : #e0e0e0,
+    100 : #b3b3b3,
+    200 : #808080,
+    300 : #4d4d4d,
+    400 : #262626,
+    500 : #000000,
+    600 : #000000,
+    700 : #000000,
+    800 : #000000,
+    900 : #000000,
+    A100 : #7a7a7a,
+    A200 : #5c5c5c,
+    A400 : #4f4f4f,
+    A700 : #474747,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #ffffff,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+$primary: mat-palette($main);
+$accent:  mat-palette($accent);
+$warn:    mat-palette($main);
+$head:    mat-palette($head2);
+$theme:   mat-light-theme($primary, $accent, $warn);
+
+@include angular-material-theme($theme);
+@include adf-content-services-theme($theme);
+@include adf-process-services-theme($theme);
+@include adf-core-theme($theme);
+
+$background: map-get($theme, background);
+
+body, html {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+    background: mat-color($background, 'card');
+    font-size: mat-font-size($alfresco-typography, body-1);
+    font-family: mat-font-family($alfresco-typography);
+    line-height: mat-line-height($alfresco-typography, body-1);
+}
+
+body {
+    overflow: auto;
+}
+
+//  Custom for this demo
+
+img.header-logo-image {
+  width: 130px;
+  height: 70px;
+}
+.adf-logo {
+  max-height: 50px;
+//  -webkit-filter: invert(100%);
+}
+.adf-login-content .adf-alfresco-logo img {
+  max-height: 70px;
+}
+.mat-drawer-container{
+  background-color: white;
+}
+
+
+.header-bg-line {
+  background: transparent url(/assets/bg-header.png) no-repeat 50% 50%;
+  width: 100%;
+  height: 80px;
+}
+
+ 
+.mat-toolbar {
+  background: white;
+}
+
+.bar-menu  {
+  font-family: 'Avenir LT W01 65 Medium', sans-serif;
+   
+  font-size: 14px;
+  line-height: 3em;
+  width: unset !important;
+}
+
+.adf-app-layout-menu-spacer{
+  width: 10px;
+}
+
+.adf-start-process {
+  width: 97% !important;
+  height: 800px !important;
+}
+
+.adf-start-task {
+  width: 97% !important;
+  height: 800px !important;
+}
+
+
+.mat-tab-body-wrapper{
+
+  width: 99% !important;
+  height: 490px !important;
+  top:10px !important;
+
+
+}
+
+.mat-tab-body-content{
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+.adf-start-process .mat-card-title{
+ visibility:hidden;
+}
+.adf-start-form-container {
+ margin-top: -125px !important;
+
+}
+
+.adf-is-hide {
+  display:none !important;
+}
+.adf-report-report-container {
+  display:none !important;
+}
+
+.basechart{
+   font-size:55px !important;
+}
+
+.adf-facet-result-filter{
+  display:none !important;
+}
+
+.header-bg-line{
+  display: inherit;
+}
+
+.fill-remaining-space {
+  /* This fills the remaining space, by using flexbox.
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
+
+ .adf-chart{
+
+  width: 550px !important;
+  height: 550px  !important;
+  
+ }
+
+ .mat-input-element {
+     font-size: 13px !important;
+   
+ } 
+
+
+ container-widget .mat-form-field{
+  height: 55px !important;
+ }
+
+ .mat-form-field-infix{
+
+  border-top: 0px solid transparent !important;
+
+ }

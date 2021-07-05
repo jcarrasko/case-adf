@@ -1,0 +1,28 @@
+{"APP_TITLE": "Departamento de Compras",
+  "LOGIN_BUTTON": "Ingresar",
+    "LOGOUT_BUTTON": "Salir",
+  "LAYOUT":{
+    "MENU_MY_TASKS":"Mis Tareas",
+    "MENU_NEW_CONTRACT":"Nuevo Contrato",
+    "MENU_CONTRACTS":"Contratos",
+    "MENU_SEARCH":"Búsqueda",
+    "MENU_ANALYSE":"Analisis",
+    "DOCUMENTS":"Documentos"
+  },
+  "MY_TASKS":{
+    "TITLE":"Mis Tareas"
+  },
+  "NEW_CONTRACT_FORM":{
+    "COMPANY":"Empresa",
+    "SIGNATURE":"Firma",
+    "COMPANY_NAME":"Nombre de la Empresa",
+    "ENTITY_TYPE":"Tipo",
+    "ENTITY_TYPE_LTD":"Sociedad Limitada",
+    "ENTITY_TYPE_PLC":"Sociedad Anónima",
+    "ENTITY_TYPE_CORP":"Corporación",
+    "ENTITY_TYPE_FREE":"Autónomo",
+    "SHARE_CAPITAL":"Capital Social",
+    "COMPANY_ADDRESS":"Dirección de la Empresa",
+    "COMPANY_CITY":"Ciudad Sede"
+  }
+}

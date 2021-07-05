@@ -1,0 +1,35 @@
+ 
+<adf-viewer
+    [showViewer]="true"
+    [blobFile]="content"
+    [displayName]="name">
+
+    <adf-viewer-toolbar-actions>
+      <button mat-icon-button (click)="aosEditonline($event)">
+          <mat-icon>edit</mat-icon>
+      </button>
+  </adf-viewer-toolbar-actions>
+
+
+  <adf-viewer-extension [supportedExtensions]="['docx']">
+    <ng-template let-urlFileContent="urlFileContent" let-extension="extension">
+        <ng-container *ngIf="!showAudit">
+            <alfresco-enterprise-viewer [nodeId]="nodeId">
+            </alfresco-enterprise-viewer> 
+        </ng-container>
+        
+    </ng-template>
+</adf-viewer-extension>
+
+</adf-viewer>
+<!--
+<adf-toolbar >
+    <button  data-automation-id="adf-toolbar-back" mat-icon-button (click)="goBack()" class="mat-focus-indicator adf-viewer-close-button mat-icon-button mat-button-base ng-star-inserted">
+        <mat-icon class="mat-icon notranslate material-icons mat-icon-no-color">close</mat-icon>
+    </button>
+</adf-toolbar>
+<alfresco-enterprise-viewer [nodeId]="defaultNodeId">
+  
+</alfresco-enterprise-viewer> 
+
+-->

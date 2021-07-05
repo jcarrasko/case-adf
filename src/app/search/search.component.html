@@ -1,0 +1,146 @@
+<adf-sidenav-layout
+  [sidenavMin]="70"
+  [sidenavMax]="220"
+  [stepOver]="600"
+  [hideSidenav]="false"
+>
+  <adf-sidenav-layout-header>
+    <ng-template let-toggleMenu="toggleMenu">
+      <div class="app-header"></div>
+    </ng-template>
+  </adf-sidenav-layout-header>
+
+  <adf-sidenav-layout-navigation>
+    <ng-template>
+      <div class="app-expanded-navigation">
+        <adf-search-filter #searchFilter></adf-search-filter>
+      </div>
+    </ng-template>
+  </adf-sidenav-layout-navigation>
+
+  <adf-sidenav-layout-content>
+    <ng-template>
+      <div class="app-search-container">
+        <button
+          mat-icon-button
+          id="app-search-button"
+          class="app-search-button"
+          (click)="doSearch(searchTermInput.value)"
+          [title]="'search...'"
+
+        >
+          <mat-icon>search</mat-icon>
+        </button>
+
+        <mat-form-field class="app-input-form-field" [floatLabel]="'never'">
+          <input
+            matInput
+            #searchTermInput
+            [type]="inputType"
+            id="app-control-input"
+            [placeholder]="'Search...'"
+
+            [searchAutocomplete]="auto"
+
+          />
+
+        </mat-form-field>
+      </div>
+
+      <adf-search-chip-list
+        [searchFilter]="searchFilter"
+      ></adf-search-chip-list>
+
+      <adf-search
+        [searchTerm]="searchTerm"
+        #auto="searchAutocomplete"
+        style="width:100% !important"
+      >
+        <ng-template let-data>
+          <adf-document-list
+            [contextMenuActions]="false"
+            [contentActions]="false"
+            [node]="data"
+            [navigate]="true"
+            [multiselect]="false"
+            [maxItems]="20"
+            [allowDropFiles]="false"
+            [navigationMode]="'click'"
+            (preview)="showPreview($event)"
+          >
+            <data-columns>
+              <data-column key="$thumbnail" type="image"></data-column>
+              <data-column
+                key="name"
+                title="Name"
+                class="full-width name-column"
+              ></data-column>
+              <data-column
+                *ngIf="isSuperRootFolder()"
+                title="Nom de la société"
+                key="properties"
+                [sortable]="false"
+              >
+                <ng-template let-value="value" let-context="$implicit">
+                  <div *ngIf="value">{{ value["rte:company"] }}</div>
+                </ng-template>
+              </data-column>
+
+              <data-column
+                *ngIf="isSuperRootFolder()"
+                title="Type of supplier"
+                key="properties"
+                [sortable]="false"
+              >
+                <ng-template let-value="value" let-context="$implicit">
+                  <div *ngIf="value">{{ value["rte:provider_type"] }}</div>
+                </ng-template>
+              </data-column>
+
+              <data-column
+                *ngIf="isSuperRootFolder()"
+                title="Object"
+                key="properties"
+                [sortable]="false"
+              >
+                <ng-template let-value="value" let-context="$implicit">
+                  <div *ngIf="value">{{ value["rte:Object"] }}</div>
+                </ng-template>
+              </data-column>
+              <data-column
+                *ngIf="isSuperRootFolder()"
+                title="Price"
+                key="properties"
+                [sortable]="false"
+              >
+                <ng-template let-value="value" let-context="$implicit">
+                  <div *ngIf="value">{{ value["rte:Price"] }}</div>
+                </ng-template>
+              </data-column>
+
+              <data-column
+                title="Created at"
+                key="createdAt"
+                type="date"
+                format="medium"
+                sortable="true"
+              >
+              </data-column>
+            </data-columns>
+          </adf-document-list>
+
+          <adf-pagination
+            [pagination]="pagination"
+            [supportedPageSizes]="sizes"
+            (change)="onChange($event)"
+            (nextPage)="onNextPage($event)"
+            (prevPage)="onPreviousPage($event)"
+            (changePageSize)="onChangePageSize($event)"
+            (changePageNumber)="onChangePageNumber($event)"
+          >
+          </adf-pagination>
+        </ng-template>
+      </adf-search>
+    </ng-template>
+  </adf-sidenav-layout-content>
+</adf-sidenav-layout>

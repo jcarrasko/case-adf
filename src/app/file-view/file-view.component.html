@@ -1,0 +1,117 @@
+<adf-toolbar >
+    <button  data-automation-id="adf-toolbar-back" mat-icon-button (click)="goBack()" class="mat-focus-indicator adf-viewer-close-button mat-icon-button mat-button-base ng-star-inserted">
+        <mat-icon class="mat-icon notranslate material-icons mat-icon-no-color">close</mat-icon>
+    </button>
+</adf-toolbar>
+
+<ng-container *ngIf="nodeId">
+
+    <ng-template let-node="node" #sidebarTemplate>
+        <adf-info-drawer [title]="'FILE INFORMATION' | translate">
+
+
+            <adf-info-drawer-tab [label]="'PROPERTIES' | translate" >
+
+                <mat-chip-list>
+                    <mat-chip><adf-icon value="locked"></adf-icon></mat-chip>
+                    <mat-chip>Confidential</mat-chip>
+                  </mat-chip-list>
+
+
+                <adf-content-metadata-card
+                [node]="node"
+                [displayEmpty]="true"
+                [multi]="true"
+                [preset]="'proc'"
+                [displayDefaultProperties]="false"
+                [readOnly]="true">
+                </adf-content-metadata-card>
+            </adf-info-drawer-tab>
+
+
+
+            <adf-info-drawer-tab [label]="'COMMENTS ' | translate">
+              <adf-comments [nodeId]="nodeId"></adf-comments>
+          </adf-info-drawer-tab>
+
+            <adf-info-drawer-tab [label]="'VERSIONS' | translate">
+                <mat-card>
+                    <mat-card-content>
+                        <adf-version-manager [node]="node"
+                                             (uploadError)="onUploadError($event)">
+                        </adf-version-manager>
+                    </mat-card-content>
+                </mat-card>
+            </adf-info-drawer-tab>
+        </adf-info-drawer>
+    </ng-template>
+    
+    <adf-viewer [nodeId]="nodeId"
+    [allowGoBack]="false"
+    allowRightSidebar=true
+    showRightSide=true
+    [sidebarRightTemplate]="sidebarTemplate"
+    [showRightSidebar]="true"
+    [allowPrint]="true">  
+   
+        <adf-viewer-toolbar-actions>
+          
+           
+            <button mat-icon-button (click)="toggleAudit()">
+                <mat-icon>person_search</mat-icon>
+            </button>
+        </adf-viewer-toolbar-actions>
+        <ng-container *ngIf="nodeType=='application/pdf'">
+        <adf-viewer-extension [supportedExtensions]="['pdf']">
+            <ng-template let-urlFileContent="urlFileContent" let-extension="extension">
+                <ng-container *ngIf="!showAudit">
+                    <adf-viewer [nodeId]="nodeId" [showToolbar]="false"></adf-viewer>
+                </ng-container>
+                <ng-container *ngIf="showAudit">
+                    <audit-viewer [nodeId]="nodeId">
+                    </audit-viewer> 
+                </ng-container>
+            </ng-template>
+        </adf-viewer-extension>
+    </ng-container>
+        <ng-container>
+        <adf-viewer-extension [supportedExtensions]="['docx']">
+            <ng-template let-urlFileContent="urlFileContent" let-extension="extension">
+                <ng-container *ngIf="!showAudit">
+                    <alfresco-enterprise-viewer [nodeId]="nodeId">
+                    </alfresco-enterprise-viewer> 
+                </ng-container>
+                <ng-container *ngIf="showAudit">
+                    <audit-viewer [nodeId]="nodeId">
+                    </audit-viewer> 
+                </ng-container>
+            </ng-template>
+        </adf-viewer-extension>
+       
+        </ng-container>
+
+        <!--
+        <adf-viewer-extension [supportedExtensions]="['png']">
+            <ng-template>
+            <h1>PNG Viewer</h1>
+            </ng-template>
+        </adf-viewer-extension>
+        -->
+
+        <!--
+        <adf-viewer-extension [supportedExtensions]="['pdf']">
+            <ng-template>
+            <h1>PDF Viewer</h1>
+            </ng-template>
+        </adf-viewer-extension>
+        -->
+
+    
+        <!-- <extension-viewer [supportedExtensions]="['PDF']" #extension>
+            <ng-template let-urlFileContent="urlFileContent" let-extension="extension" >
+            <threed-viewer [urlFile]="urlFileContent" [extension]="extension" ></threed-viewer> 
+            </ng-template>
+        </extension-viewer> -->
+    
+    </adf-viewer>  
+</ng-container>

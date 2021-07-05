@@ -1,0 +1,39 @@
+<adf-sidenav-layout
+  [sidenavMin]="70"
+  [sidenavMax]="220"
+  [stepOver]="600"
+  [hideSidenav]="false"
+ >
+  <adf-sidenav-layout-header>
+    <ng-template let-toggleMenu="toggleMenu">
+      <div class="app-header">
+      </div>
+    </ng-template>
+  </adf-sidenav-layout-header>
+
+  <adf-sidenav-layout-navigation>
+    <ng-template>
+      <adf-analytics-report-list
+      [appId]="appId"
+      [layoutType]="'LIST'"
+      (reportClick)="launchReport($event)">
+  </adf-analytics-report-list>
+    </ng-template>
+  </adf-sidenav-layout-navigation>
+  <adf-sidenav-layout-content>
+    <ng-template>
+
+      <adf-analytics
+      [appId]="appId"
+      [hideParameters]=true
+      [reportId]="reportId">
+  </adf-analytics>
+
+
+
+    </ng-template>
+  </adf-sidenav-layout-content>
+</adf-sidenav-layout>
+
+
+

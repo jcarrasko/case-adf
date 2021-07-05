@@ -1,0 +1,187 @@
+<adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="200" [stepOver]="780" [hideSidenav]="false"
+    [expandedSidenav]="false">
+
+    <adf-sidenav-layout-header class="bg-line">
+
+        <ng-template let-toggleMenu="toggleMenu">
+
+            <mat-toolbar color="head" class="adf-app-layout-toolbar mat-elevation-z6">
+                <button mat-icon-button (click)="toggleMenu()">
+                    <mat-icon color="yelow">menu</mat-icon>
+                </button>
+
+
+                <img class="adf-logo" src="assets/logo-light.png" alt="Alfresco, make business flow" />
+                <div class="adf-app-layout-menu-spacer"></div>
+                <div class="adf-app-layout-menu-spacer"></div>
+                <div class="adf-app-layout-menu-spacer"></div>
+                <div class="adf-app-layout-menu-spacer"></div>
+                <button mat-icon-button class="bar-menu" routerLink="/apps/2/tasks">
+                    <div class="adf-app-layout-menu-spacer"></div>{{ "LAYOUT.MENU_MY_TASKS" | translate }}<mat-icon>
+                        arrow_drop_down</mat-icon>
+                </button>
+
+
+                <button mat-icon-button class="bar-menu" routerLink="/apps/2/start-process">
+                    {{ "LAYOUT.MENU_NEW_CONTRACT" | translate }}<mat-icon>arrow_drop_down</mat-icon>
+                </button>
+                <div class="adf-app-layout-menu-spacer"></div>
+                <button mat-icon-button class="bar-menu" routerLink="/case-library">
+                    {{ "LAYOUT.MENU_CONTRACTS" | translate }}<mat-icon>arrow_drop_down</mat-icon>
+                </button>
+                <div class="adf-app-layout-menu-spacer"></div>
+                <button mat-icon-button class="bar-menu" routerLink="/search">
+                    {{ "LAYOUT.MENU_SEARCH" | translate }}<mat-icon>arrow_drop_down</mat-icon>
+                </button>
+                <div class="adf-app-layout-menu-spacer"></div>
+                <!--button *ngIf="isSuperUser()" mat-icon-button class="bar-menu" routerLink="/dashboard">
+                    Dashboard<mat-icon>arrow_drop_down</mat-icon>
+                </button>
+                <div class="adf-app-layout-menu-spacer"></div>
+                <button *ngIf="isSuperUser()" mat-icon-button class="bar-menu" routerLink="/analytics">
+                    <mat-icon>keyboard_arrow_down</mat-icon>{{ "LAYOUT.MENU_ANALYSE" | translate }}
+                  </button-->
+
+
+                <div class="adf-toolbar--spacer"></div>
+
+
+
+                <adf-notification-history [menuPositionX]="'before'" [menuPositionY]="'above'">
+                </adf-notification-history>
+                <span fxFlex="1 1 auto" fxShow fxHide.lt-sm="true">{{ "APP_TITLE" | translate }}</span>
+
+
+                <!--  <adf-userinfo></adf-userinfo> -->
+                
+               
+
+            </mat-toolbar>
+
+
+
+
+
+
+
+            <!--img style="width:120px" src="assets/logo-light.png" /-->
+
+
+
+            <mat-toolbar color="accent" class="adf-app-layout-toolbar mat-elevation-z6">
+                <!--          <button mat-icon-button class="bar-menu" routerLink="/apps/1001/tasks">
+              <mat-icon>task_outline</mat-icon>{{ "LAYOUT.MENU_MY_TASKS" | translate }}
+          </button>
+          <div class="adf-app-layout-menu-spacer"></div>
+
+            <button mat-icon-button class="bar-menu" routerLink="/apps/1001/start-process">
+                <mat-icon>create_new_folder</mat-icon>{{ "LAYOUT.MENU_NEW_CONTRACT" | translate }}
+            </button>
+            <div class="adf-app-layout-menu-spacer"></div>
+            <button mat-icon-button class="bar-menu" routerLink="/documentlist">
+                <mat-icon>topic</mat-icon>{{ "LAYOUT.MENU_CONTRACTS" | translate }}
+            </button>
+            <div class="adf-app-layout-menu-spacer"></div>
+            <button mat-icon-button class="bar-menu" routerLink="/search">
+              <mat-icon>manage_search</mat-icon>{{ "LAYOUT.MENU_SEARCH" | translate }}
+            </button>
+            <div class="adf-app-layout-menu-spacer"></div>
+            <button *ngIf="isSuperUser()" mat-icon-button class="bar-menu" routerLink="/analytics">
+              <mat-icon>analytics</mat-icon>{{ "LAYOUT.MENU_ANALYSE" | translate }}
+            </button>
+
+        -->
+                <div class="adf-toolbar--spacer"></div>
+
+
+ <adf-search-control
+                  [highlight]="true"
+                  (optionClicked)="onItemClicked($event)"
+                  (submit)="onSearchSubmit($event)">
+                 </adf-search-control>
+
+
+                <mat-icon class="material-icons-outlined">supervised_user_circle</mat-icon>
+                <div class="adf-app-layout-menu-spacer"></div> {{getUserName()}}
+
+                <!--  <adf-userinfo></adf-userinfo>
+           <adf-search-control
+            [highlight]="true"
+            (optionClicked)="onItemClicked($event)"
+            (submit)="onSearchSubmit($event)">
+           </adf-search-control>
+          -->
+
+            </mat-toolbar>
+
+
+        </ng-template>
+
+
+
+    </adf-sidenav-layout-header>
+
+    <adf-sidenav-layout-navigation>
+        <ng-template let-isMenuMinimized="isMenuMinimized">
+
+            <mat-nav-list class="adf-sidenav-linklist">
+                
+                <a mat-list-item class="adf-sidenav-link" routerLink="/documentlist">
+                    <mat-icon matListIcon class="sidenav-menu-icon">contact_page</mat-icon>
+                    <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">Customer Files</div>
+                </a>
+                <a mat-list-item class="adf-sidenav-link" routerLink="/dashboard">
+                    <mat-icon matListIcon class="sidenav-menu-icon">dashboard</mat-icon>
+                    <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">Dashboard</div>
+                </a>
+                <div *ngIf="!isMenuMinimized()">
+                    <h3>
+                        &nbsp; Quick Claims
+                    </h3>
+                    <hr/>
+                </div>
+                <a mat-list-item class="adf-sidenav-link" routerLink="/apps/2/start-process">
+                    <mat-icon matListIcon class="sidenav-menu-icon">manage_accounts</mat-icon>
+                    <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">Retirement Claim</div>
+                </a>
+                   
+                <!--a mat-list-item class="adf-sidenav-link" routerLink="/apps/1001/tasks">
+                    <mat-icon matListIcon class="sidenav-menu-icon">task</mat-icon>
+                    <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">Apps</div>
+                </a-->
+                <div *ngIf="!isMenuMinimized()">
+                
+                <a mat-list-item class="adf-sidenav-link" routerLink="/apps/2/start-process">
+                    <mat-icon matListIcon class="sidenav-menu-icon">manage_accounts</mat-icon>
+                    <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">Risk Salary Claim</div>
+                </a>
+                <a mat-list-item class="adf-sidenav-link" routerLink="/apps/2/start-process">
+                    <mat-icon matListIcon class="sidenav-menu-icon">manage_accounts</mat-icon>
+                    <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">General Scheme Claim</div>
+                </a>
+                <a mat-list-item class="adf-sidenav-link" routerLink="/apps/2/start-process">
+                    <mat-icon matListIcon class="sidenav-menu-icon">manage_accounts</mat-icon>
+                    <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">Disability Claim</div>
+                </a>
+                </div>
+
+                <hr/>
+                
+                <a mat-list-item adf-logout class="adf-sidenav-link">
+                    <mat-icon matListIcon class="sidenav-menu-icon">exit_to_app</mat-icon>
+                    <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">{{ "LOGOUT_BUTTON" | translate }}</div>
+                </a>
+
+                
+
+            </mat-nav-list>
+        </ng-template>
+    </adf-sidenav-layout-navigation>
+
+    <adf-sidenav-layout-content>
+        <ng-template>
+            <router-outlet></router-outlet>
+        </ng-template>
+    </adf-sidenav-layout-content>
+</adf-sidenav-layout>
+
