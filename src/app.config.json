@@ -90,7 +90,7 @@
           ]
       },
       "filterQueries": [
-          { "query": "TYPE:'proc:purchasing_contract' OR TYPE:'proc:purchasing_contract_folder'" },
+          { "query": "ASPECT:'case:case' OR TYPE:'case:document'" },
           { "query": "NOT cm:creator:System" }
       ],
       "facetFields": {
@@ -130,7 +130,7 @@
                     "operator": "OR",
                     "options": [
                         { "name": "Case Documents", "value": "ASPECT:'case:document'" },
-                        { "name": "Cases", "value": "ASPECT:'case:case'" }
+                        { "name": "Case Folder", "value": "ASPECT:'case:case'" }
 
                     ]
                  }
