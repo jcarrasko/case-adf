@@ -1,3 +1,3 @@
-ng build --base-href=/procurement-app/
-tar -czvf procurement.tar.gz dist/
-mv procurement.tar.gz ../../../../aws/DL/Procurement_v3
+ng build --base-href=/case-app/
+tar -czvf case-app.tar.gz dist/
+mv case-app.tar.gz ../../../adbp/aws-case-liberty/

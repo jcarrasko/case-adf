@@ -140,7 +140,7 @@
                     </h3>
                     <hr/>
                 </div>
-                <a mat-list-item class="adf-sidenav-link" routerLink="/apps/2/start-process">
+                <a mat-list-item class="adf-sidenav-link" routerLink="/apps/2/start-process?claim=option_1">
                     <mat-icon matListIcon class="sidenav-menu-icon">manage_accounts</mat-icon>
                     <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">Retirement Claim</div>
                 </a>
@@ -151,17 +151,17 @@
                 </a-->
                 <div *ngIf="!isMenuMinimized()">
                 
-                <a mat-list-item class="adf-sidenav-link" routerLink="/apps/2/start-process">
+                <a mat-list-item class="adf-sidenav-link" routerLink="/apps/2/start-process?claim=option_2">
                     <mat-icon matListIcon class="sidenav-menu-icon">manage_accounts</mat-icon>
-                    <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">Risk Salary Claim</div>
+                    <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">Funeral Claim</div>
                 </a>
-                <a mat-list-item class="adf-sidenav-link" routerLink="/apps/2/start-process">
-                    <mat-icon matListIcon class="sidenav-menu-icon">manage_accounts</mat-icon>
-                    <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">General Scheme Claim</div>
-                </a>
-                <a mat-list-item class="adf-sidenav-link" routerLink="/apps/2/start-process">
+                <a mat-list-item class="adf-sidenav-link" routerLink="/apps/2/start-process?claim=option_4">
                     <mat-icon matListIcon class="sidenav-menu-icon">manage_accounts</mat-icon>
                     <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">Disability Claim</div>
+                </a>
+                <a mat-list-item class="adf-sidenav-link" routerLink="/apps/2/start-process?claim=option_5">
+                    <mat-icon matListIcon class="sidenav-menu-icon">manage_accounts</mat-icon>
+                    <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">Income protection Claim</div>
                 </a>
                 </div>
 

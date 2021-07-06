@@ -68,7 +68,7 @@ export class CaseLibraryComponent  {
 
     
     this.formService=formService;
-  
+   
 
     formService.formFieldValueChanged.subscribe((e: FormFieldEvent) => {
       if (e.field.id === 'member') {
@@ -115,7 +115,8 @@ export class CaseLibraryComponent  {
 
     });
 
-
+    this.nodeId = this.appConfig.get<string>('application.caseLibraryRootNodeId');
+  
  
 
   }
@@ -158,20 +159,32 @@ export class CaseLibraryComponent  {
 
   launchNewTaskWorkflow(event: any) {
 
-     
- 
+  
+    this.nodesApiService.getNode(this.defaultNodeId).subscribe((node: Node) => {
+      this.formValues = {
+        'content': node,
+        'label1': 'New Task:'
+      }
+      this.processName = 'New Task for case:';
+      this.processId = "1"; 
+    }    );
+
+
+  
+
+
     this.showDL = false;
-    this.showNewTask = true;
+    this.showProcess = true;
 
-
-    this.notificationService
-    .openSnackMessage("New task on case "+this.documentList.folderNode.properties["case:id"], 200)
+   // this.defaultNodeId=this.documentList.currentFolderId;
+    /*this.notificationService
+    .openSnackMessage('Review and Approve workflow launched', 2000)
     .afterDismissed()
-    .subscribe(() => {   
-        console.log("New task on case"+this.documentList.folderNode.properties["case:id"]);
-    });
+    .subscribe(() => {  
+        console.log('Review and Approve workflow launched');
+    });*/
 
-  }
+    }
 
 
   launchWorkflow(event: any) {
@@ -189,13 +202,13 @@ export class CaseLibraryComponent  {
     this.showDL = false;
     this.showProcess = true;
 
-    this.defaultNodeId=this.documentList.currentFolderId;
-    this.notificationService
+    this.nodeId=this.documentList.currentFolderId;
+    /*this.notificationService
     .openSnackMessage('Review and Approve workflow launched', 2000)
     .afterDismissed()
     .subscribe(() => {  
         console.log('Review and Approve workflow launched');
-    });
+    });*/
 
   }
 
@@ -204,8 +217,8 @@ export class CaseLibraryComponent  {
     this.processName = 'Request docs for Claim:' + this.documentList.folderNode.properties["case:id"];
     this.showDL = false;
     this.showRequestMoreFiles = true;
-
-    this.defaultNodeId=this.documentList.currentFolderId;
+    
+    //this.defaultNodeId=this.documentList.currentFolderId;
     /*this.notificationService
     .showInfo('Request docs for case' + this.documentList.folderNode.properties["case:id"]);*/
   
@@ -220,9 +233,9 @@ export class CaseLibraryComponent  {
     this.formValues = {
       'folderid': this.documentList.currentFolderId
     };
-    this.defaultNodeId=this.documentList.currentFolderId;
-    this.memberId=this.documentList.folderNode.properties["case:id"];
-    this.caseId=this.documentList.folderNode.properties["case:id"];
+    //this.defaultNodeId=this.documentList.currentFolderId;
+    //this.memberId=this.documentList.folderNode.properties["case:id"];
+    //this.caseId=this.documentList.folderNode.properties["case:id"];
     
 
     /*this.notificationService
@@ -237,17 +250,18 @@ export class CaseLibraryComponent  {
     this.showIndexNewFiles= false;
     this.showNewTask=false;
     this.showRequestMoreFiles=false;
-    this.defaultNodeId=this.documentList.currentFolderId;
+    
   }
  
   cancelingWorkflow(event) {
-    this.showDL = true;
+    
     this.showProcess = false;
     this.showIndexNewFiles= false;
     this.showNewTask=false;
     this.showRequestMoreFiles=false;
-    this.defaultNodeId=this.documentList.currentFolderId;
-
+    this.showDL = true;
+ 
+   
    
   }
 
@@ -256,7 +270,41 @@ export class CaseLibraryComponent  {
     this.defaultNodeId = this.appConfig.get<string>('application.caseLibraryRootNodeId');
     if (this.documentList.currentFolderId!=this.defaultNodeId){
       this.isCaseFolder=true;
-      this.isRootFolder=false;  
+      this.isRootFolder=false; 
+      
+      
+
+      this.formService.formFieldValueChanged.subscribe((e: FormFieldEvent) => {
+        if (e.field.id === 'member') {
+            const fields: FormFieldModel[] = e.form.getFormFields();
+          
+            const schemeName = fields.find(f => f.id === 'schemename');
+            const schemeId = fields.find(f => f.id === 'scheme');
+            const memberId = fields.find(f => f.id === 'member');
+            const nationalId = fields.find(f => f.id === 'nationalid');
+            const firstName = fields.find(f => f.id === 'memberfirstname');
+            const lastName = fields.find(f => f.id === 'memberlastname');
+            
+            if (schemeName != null) {
+              if(this.isCaseFolder==true){
+                memberId.value=this.documentList.folderNode.properties["case:MemberId"];
+                schemeName.value=this.documentList.folderNode.properties["case:schemeName"];
+                schemeId.value=this.documentList.folderNode.properties["case:schemeId"];
+                nationalId.value=this.documentList.folderNode.properties["case:nationalId"];
+                firstName.value=this.documentList.folderNode.properties["case:firstName"];
+                lastName.value=this.documentList.folderNode.properties["case:lastName"];
+              }else{
+                schemeName.value='';
+                schemeId.value="";
+                nationalId.value="";
+                firstName.value="";
+                lastName.value="";
+           
+              }
+            }}});
+
+
+
     }else{
       this.isCaseFolder=false;
       this.isRootFolder=true;

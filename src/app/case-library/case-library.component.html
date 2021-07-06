@@ -1,14 +1,13 @@
-<div *ngIf="isCaseFolder" style="height:150px">
-  <adf-start-process [appId]="'2'" [processDefinitionName]="'new-claim'" [showSelectProcessDropdown]=false
+<div *ngIf="isCaseFolder" class="case-head" >
+  <adf-start-process  [appId]="'2'" [processDefinitionName]="'new-claim'" [showSelectProcessDropdown]=false
     [showSelectApplicationDropdown]=false (start)="onProcessStarted($event)" (cancel)="onCancelStartProcess()">
   </adf-start-process>
 </div>
-
-
+ 
 
 <adf-info-drawer>
-  <adf-info-drawer-tab label="Documents">
-    <div *ngIf="showDL">
+  <adf-info-drawer-tab label="{{isCaseFolder ? 'Documents' : 'Cases'}}">
+    <div [style.display]="showDL ? 'block' : 'none'">
       <adf-toolbar>
         <adf-toolbar-title>
           <adf-breadcrumb class="files-breadcrumb" root="Claims" [rootId]="defaultNodeId" [target]="documentList"
@@ -64,7 +63,7 @@
 
 
 
-      <adf-document-list #documentList [currentFolderId]="defaultNodeId" [contextMenuActions]="true"
+      <adf-document-list #documentList [currentFolderId]="nodeId" [contextMenuActions]="true"
         [contentActions]="true" (ready)="refreshFolder($event)" (preview)="showPreview($event)">
 
 
@@ -145,7 +144,7 @@
     </div>
 
     <!-- for launching adhoc task-->
-    <div *ngIf="showNewTask" style="width:100%">
+    <div *ngIf="showNewTask" style="width:100%" (cancel)="cancelingWorkflow($event)">
       <adf-start-task [appId]="2">
       </adf-start-task>
     </div>
